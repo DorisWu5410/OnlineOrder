@@ -1,0 +1,48 @@
+import { Layout, Typography } from "antd";
+import { Components } from "antd/lib/date-picker/generatePicker";
+import { useState } from "react";
+import FoodList from "./components/FoodList";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
+import MyCart from "./components/MyCart";
+
+const { Header, Content } = Layout;
+const { Title } = Typography;
+
+function App() {
+  const [authed, setAuthed] = useState(false);
+  return (
+    <Layout style={{ height: "100vh" }}>
+      <Header>
+      <div className="header">
+          <Title
+            level={2}
+            style={{ color: "white", lineHeight: "inherit", marginBottom: 0 }}
+          >
+            Lai Food
+          </Title>
+          
+          <div>{authed ? <MyCart /> : <SignupForm />}</div>
+        </div>
+      </Header>
+
+      <Content
+        style={{
+          padding: "50px",
+          maxHeight: "calc(100% - 64px)",
+          overflowY: "auto",
+        }}
+      >
+        {authed ? (
+          <FoodList />
+        ) : (
+          <LoginForm onSuccess={() => setAuthed(true)} />
+        )}
+      </Content>
+      {/* <LoginForm onSuccess={() => {console.log("success")}}/> */}
+
+    </Layout>
+  );
+}
+
+export default App;
